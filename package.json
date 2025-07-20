@@ -3,7 +3,8 @@
   "version": "1.0.1",
   "description": "CLI tools for SaraWebs dev workflow",
   "bin": {
-    "sb-cc": "bin/sb-cc.js"
+    "sb-cc": "bin/sb-cc.js",
+    "sb-ch": "bin/sb-ch.js"
   },
   "scripts": {
     "format": "npx prettier --write ."

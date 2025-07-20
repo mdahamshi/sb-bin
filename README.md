@@ -23,7 +23,7 @@ sb-cc Card
 Creates:
 
 ```
-./Card/
+./src/components/Card/
 ├── Card.jsx
 └── Card.css
 ```
@@ -39,40 +39,21 @@ sb-cc Button Header Footer
 Creates:
 
 ```
-./Button/
+./src/components/Button/
 ├── Button.jsx
 └── Button.css
 
-./Header/
+./src/components/Header/
 ├── Header.jsx
 └── Header.css
 
-./Footer/
+./src/components/Footer/
 ├── Footer.jsx
 └── Footer.css
 ```
 
 ---
 
-### Create inside a `components/` folder
-
-```bash
-sb-cc Card Button --in-components
-```
-
-Creates:
-
-```
-./components/Card/
-├── Card.jsx
-└── Card.css
-
-./components/Button/
-├── Button.jsx
-└── Button.css
-```
-
----
 
 ## 🧩 What It Generates
 
@@ -107,12 +88,47 @@ export default function Component({ children }) {
 
 | Flag              | Description                                |
 | ----------------- | ------------------------------------------ |
-| `--in-components` | Puts components inside a `components/` dir |
 | `A B C`           | Creates multiple components at once        |
 
 > ⚠️ Existing components won't be overwritten — you'll see a warning instead.
 
 ---
+
+Here’s the updated `README.md` section for your `sb-bin` CLI tool, documenting the new hook creation feature:
+
+---
+
+## 🪝 Create React Hooks
+
+Generate one or more React hooks in the `src/hooks` directory.
+
+### 🔧 Usage
+
+```bash
+sb-ch useCounter useClickOutside
+```
+
+This will generate the following structure:
+
+```
+src/
+└── hooks/
+    ├── useCounter/
+    │   └── useCounter.js
+    └── useClickOutside/
+        └── useClickOutside.js
+```
+
+Each hook file includes a basic template with `useEffect` and `useState` imports.
+
+### 🛑 Notes
+
+* If a hook directory already exists, it will be **skipped** and a warning will be shown.
+* All hooks must be passed as arguments (no interactive prompt for now).
+
+---
+
+Let me know if you'd like to support custom templates or TypeScript too.
 
 ## 🧠 Coming Soon
 

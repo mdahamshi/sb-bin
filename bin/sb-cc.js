@@ -5,20 +5,17 @@ const path = require("path");
 
 // === Parse CLI Arguments ===
 const args = process.argv.slice(2);
-const useComponentsFolder = args.includes("--in-components");
 const componentNames = args.filter((arg) => !arg.startsWith("--"));
 
 // === Validations ===
 if (componentNames.length === 0) {
   console.error("❌ Please provide at least one component name.");
-  console.log("Usage: sb-cc Button Card --in-components");
+  console.log("Usage: sb-cc Button Card");
   process.exit(1);
 }
 
 // === Determine Base Path ===
-const baseDir = useComponentsFolder
-  ? path.join(process.cwd(), "components")
-  : process.cwd();
+const baseDir = path.join(process.cwd(), "src", "components");
 
 // === Loop through components ===
 componentNames.forEach((componentName) => {
