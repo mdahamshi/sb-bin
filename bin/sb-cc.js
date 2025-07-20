@@ -3,23 +3,36 @@
 const fs = require("fs");
 const path = require("path");
 
-const componentName = process.argv[2];
+// === Parse CLI Arguments ===
+const args = process.argv.slice(2);
+const useComponentsFolder = args.includes("--in-components");
+const componentNames = args.filter((arg) => !arg.startsWith("--"));
 
-if (!componentName) {
-  console.error("❌ Please provide a component name.");
+// === Validations ===
+if (componentNames.length === 0) {
+  console.error("❌ Please provide at least one component name.");
+  console.log("Usage: sb-cc Button Card --in-components");
   process.exit(1);
 }
 
-const componentDir = path.join(process.cwd(), componentName);
+// === Determine Base Path ===
+const baseDir = useComponentsFolder
+  ? path.join(process.cwd(), "components")
+  : process.cwd();
 
-if (fs.existsSync(componentDir)) {
-  console.error("❌ Component folder already exists.");
-  process.exit(1);
-}
+// === Loop through components ===
+componentNames.forEach((componentName) => {
+  const componentDir = path.join(baseDir, componentName);
 
-fs.mkdirSync(componentDir);
+  if (fs.existsSync(componentDir)) {
+    console.warn(`⚠️  Skipped: '${componentName}' already exists.`);
+    return;
+  }
 
-const jsxContent = `import './${componentName}.css';
+  fs.mkdirSync(componentDir, { recursive: true });
+
+  // Create JSX file
+  const jsxContent = `import './${componentName}.css';
 
 export default function ${componentName}({ children }) {
   return (
@@ -30,7 +43,8 @@ export default function ${componentName}({ children }) {
 }
 `;
 
-const cssContent = `.${componentName.toLowerCase()} {
+  // Create CSS file
+  const cssContent = `.${componentName.toLowerCase()} {
   background-color: #fff;
   padding: 1rem;
   border-radius: 12px;
@@ -38,7 +52,8 @@ const cssContent = `.${componentName.toLowerCase()} {
 }
 `;
 
-fs.writeFileSync(path.join(componentDir, `${componentName}.jsx`), jsxContent);
-fs.writeFileSync(path.join(componentDir, `${componentName}.css`), cssContent);
+  fs.writeFileSync(path.join(componentDir, `${componentName}.jsx`), jsxContent);
+  fs.writeFileSync(path.join(componentDir, `${componentName}.css`), cssContent);
 
-console.log(`✅ Component '${componentName}' created!`);
+  console.log(`✅ Created: ${componentName}`);
+});

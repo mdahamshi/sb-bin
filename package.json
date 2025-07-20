@@ -5,6 +5,9 @@
   "bin": {
     "sb-cc": "bin/sb-cc.js"
   },
+  "scripts": {
+    "format": "npx prettier --write ."
+  },
   "author": "Mohammad Dahamshi",
   "license": "MIT",
   "repository": {
@@ -19,5 +22,8 @@
     "component",
     "sarawebs",
     "sb-bin"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "3.6.1"
+  }
 }

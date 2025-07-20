@@ -14,38 +14,86 @@ npm install -g @sarawebs/sb-bin
 
 ## 🚀 Usage
 
-### Create a new React component with CSS
+### Create a single React component
 
 ```bash
 sb-cc Card
 ```
 
-This will generate the following structure in your current directory:
+Creates:
 
 ```
-Card/
+./Card/
 ├── Card.jsx
 └── Card.css
 ```
 
-### ✅ Generated `Card.jsx`
+---
+
+### Create multiple components at once
+
+```bash
+sb-cc Button Header Footer
+```
+
+Creates:
+
+```
+./Button/
+├── Button.jsx
+└── Button.css
+
+./Header/
+├── Header.jsx
+└── Header.css
+
+./Footer/
+├── Footer.jsx
+└── Footer.css
+```
+
+---
+
+### Create inside a `components/` folder
+
+```bash
+sb-cc Card Button --in-components
+```
+
+Creates:
+
+```
+./components/Card/
+├── Card.jsx
+└── Card.css
+
+./components/Button/
+├── Button.jsx
+└── Button.css
+```
+
+---
+
+## 🧩 What It Generates
+
+### `Component.jsx`
 
 ```jsx
-import './Card.css';
+import './Component.css';
 
-export default function Card({ children }) {
+export default function Component({ children }) {
   return (
-    <div className="card">
+    <div className="component">
       {children}
     </div>
   );
 }
 ```
 
-### ✅ Generated `Card.css`
+### `Component.css`
 
 ```css
-.card {
+.component {
   background-color: #fff;
   padding: 1rem;
   border-radius: 12px;
@@ -55,19 +103,29 @@ export default function Card({ children }) {
 
 ---
 
-## 🛠 Options (Coming Soon)
+## 🛠️ Options
 
-| Option     | Description                     |
-| ---------- | ------------------------------- |
-| `--tsx`    | Generate a TypeScript component |
-| `--scss`   | Use SCSS instead of CSS         |
-| `--module` | Use CSS Modules                 |
+| Flag              | Description                                |
+| ----------------- | ------------------------------------------ |
+| `--in-components` | Puts components inside a `components/` dir |
+| `A B C`           | Creates multiple components at once        |
+
+> ⚠️ Existing components won't be overwritten — you'll see a warning instead.
 
 ---
 
-## 💡 About
+## 🧠 Coming Soon
 
-Built by [Mohammad Dahamshi](https://github.com/mdahamshi) for use with [SaraWebs](https://sarawebs.com) projects, and anyone who wants a quick way to scaffold clean React components.
+* `--tsx` for TypeScript components
+* `--scss` for SCSS styling
+* `--module` for CSS Modules
+* `--with-index` for `index.js` barrel file
+
+---
+
+## 👨‍💻 About
+
+Created by [Mohammad Dahamshi](https://github.com/mdahamshi) for [SaraWebs](https://sarawebs.com) to speed up React development with a clean and repeatable structure.
 
 ---
 
