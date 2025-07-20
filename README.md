@@ -113,10 +113,8 @@ This will generate the following structure:
 ```
 src/
 └── hooks/
-    ├── useCounter/
-    │   └── useCounter.js
-    └── useClickOutside/
-        └── useClickOutside.js
+    ├── useCounter.js
+    └── useClickOutside.js
 ```
 
 Each hook file includes a basic template with `useEffect` and `useState` imports.

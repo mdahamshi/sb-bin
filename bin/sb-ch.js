@@ -10,31 +10,33 @@ const hookNames = args.filter((arg) => !arg.startsWith("--"));
 // === Validations ===
 if (hookNames.length === 0) {
   console.error("❌ Please provide at least one hook name.");
-  console.log("Usage: sb-cc Button Card");
+  console.log("Usage: sb-ch useCounter useToggle");
   process.exit(1);
 }
 
 // === Determine Base Path ===
 const baseDir = path.join(process.cwd(), "src", "hooks");
 
-// === Loop through hooks ===
-hookNames.forEach((hookName) => {
-  const hookDir = baseDir;
+// === Ensure base hook directory exists ===
+fs.mkdirSync(baseDir, { recursive: true });
 
-  if (fs.existsSync(hookDir)) {
+// === Loop through hook names ===
+hookNames.forEach((hookName) => {
+  const hookFile = path.join(baseDir, `${hookName}.js`);
+
+  if (fs.existsSync(hookFile)) {
     console.warn(`⚠️  Skipped: '${hookName}' already exists.`);
     return;
   }
 
-  fs.mkdirSync(hookDir, { recursive: true });
-
   const jsContent = `import { useEffect, useState } from "react";
+
 export function ${hookName}() {
-  
+  // TODO: implement ${hookName}
 }
 `;
 
-  fs.writeFileSync(path.join(hookDir, `${hookName}.js`), jsContent);
+  fs.writeFileSync(hookFile, jsContent);
 
   console.log(`✅ Created: ${hookName}`);
 });
