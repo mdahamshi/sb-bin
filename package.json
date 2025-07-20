@@ -1,0 +1,23 @@
+{
+  "name": "@sarawebs/sb-bin",
+  "version": "1.0.0",
+  "description": "CLI tools for SaraWebs dev workflow",
+  "bin": {
+    "sb-cc": "bin/sb-cc.js"
+  },
+  "author": "Mohammad Dahamshi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mdahamshi/sb-bin.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "bin",
+    "component",
+    "sarawebs",
+    "sb-bin"
+  ]
+}
