@@ -1,149 +1,107 @@
-# @sarawebs/sb-bin
+# 🧱 `sb-gen` — Simple Boilerplate Code Generator
 
-> 🧰 Simple CLI utilities for React component scaffolding — made for speed, structure, and simplicity.
+A developer-friendly CLI utility to quickly scaffold React boilerplate files in your project structure.
+Easily generate components, hooks, tests, pages, and context files using intuitive commands.
 
 ---
 
-## 📦 Installation
+## 🚀 Features
+
+* 🔧 Generate React components with boilerplate
+* 🪝 Create custom hooks with sensible defaults
+* 🧪 Add test files for your components
+* 📄 Scaffold page files for routing
+* 🧠 Create React context providers and hooks
+* ✨ Supports multiple entries per type in a single command
+* 📁 Automatically places files in the correct `src/` subfolders
+
+---
+
+## 📁 Folder Structure
+
+```bash
+src/
+├── assets/            # images, logos, etc.
+├── components/        # reusable components (Navbar, ProductCard, etc.)
+├── context/           # global state with React context
+├── hooks/             # custom React hooks
+├── pages/             # main views like Home, Cart, Shop
+├── tests/             # unit tests
+```
+
+---
+
+## 🛠 Installation
+
+Install globally using npm:
 
 ```bash
 npm install -g @sarawebs/sb-bin
-````
+```
+
+This will make the `sb-gen` command available globally from your terminal.
 
 ---
 
-## 🚀 Usage
-
-### Create a single React component
+## 💻 Usage
 
 ```bash
-sb-cc Card
+sb-gen [flags] [names...]
 ```
 
-Creates:
+### ✅ Supported Flags
 
-```
-./src/components/Card/
-├── Card.jsx
-└── Card.css
-```
+| Flag          | Alias | Description                      | Target Directory  |
+| ------------- | ----- | -------------------------------- | ----------------- |
+| `--component` | `-c`  | Create React components          | `src/components/` |
+| `--hook`      | `-h`  | Create custom React hooks        | `src/hooks/`      |
+| `--test`      | `-t`  | Create test files                | `src/tests/`      |
+| `--page`      | `-p`  | Create React pages               | `src/pages/`      |
+| `--context`   | `-x`  | Create React context boilerplate | `src/context/`    |
 
 ---
 
-### Create multiple components at once
+## ✨ Examples
 
 ```bash
-sb-cc Button Header Footer
+sb-gen -c Navbar Footer -h auth fetchUser -t Navbar -p Home Shop -x Cart
 ```
 
-Creates:
+📦 This creates:
 
 ```
-./src/components/Button/
-├── Button.jsx
-└── Button.css
-
-./src/components/Header/
-├── Header.jsx
-└── Header.css
-
-./src/components/Footer/
-├── Footer.jsx
-└── Footer.css
+src/components/Navbar.jsx
+src/components/Footer.jsx
+src/hooks/useAuth.jsx
+src/hooks/useFetchUser.jsx
+src/tests/Navbar.test.jsx
+src/pages/Home.jsx
+src/pages/Shop.jsx
+src/context/CartContext.jsx
 ```
 
 ---
 
+## 📚 Boilerplate Overview
 
-## 🧩 What It Generates
-
-### `Component.jsx`
-
-```jsx
-import './Component.css';
-
-export default function Component({ children }) {
-  return (
-    <div className="component">
-      {children}
-    </div>
-  );
-}
-```
-
-### `Component.css`
-
-```css
-.component {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-```
+* **Component:** Functional React component
+* **Hook:** Custom `useX` hook
+* **Test:** React Testing Library setup
+* **Page:** Basic functional component
+* **Context:** Provider + custom hook for usage
 
 ---
 
-## 🛠️ Options
+## 📌 Notes
 
-| Flag              | Description                                |
-| ----------------- | ------------------------------------------ |
-| `A B C`           | Creates multiple components at once        |
-
-> ⚠️ Existing components won't be overwritten — you'll see a warning instead.
-
----
-
-Here’s the updated `README.md` section for your `sb-bin` CLI tool, documenting the new hook creation feature:
+* Component and context names are automatically capitalized.
+* Hook names are prefixed with `use` if not already.
+* All files use `.jsx` extension.
+* Works best inside a standard React app using the described folder structure.
 
 ---
 
-## 🪝 Create React Hooks
+## 🧩 License
 
-Generate one or more React hooks in the `src/hooks` directory.
-
-### 🔧 Usage
-
-```bash
-sb-ch useCounter useClickOutside
-```
-
-This will generate the following structure:
-
-```
-src/
-└── hooks/
-    ├── useCounter.js
-    └── useClickOutside.js
-```
-
-Each hook file includes a basic template with `useEffect` and `useState` imports.
-
-### 🛑 Notes
-
-* If a hook directory already exists, it will be **skipped** and a warning will be shown.
-* All hooks must be passed as arguments (no interactive prompt for now).
-
----
-
-Let me know if you'd like to support custom templates or TypeScript too.
-
-## 🧠 Coming Soon
-
-* `--tsx` for TypeScript components
-* `--scss` for SCSS styling
-* `--module` for CSS Modules
-* `--with-index` for `index.js` barrel file
-
----
-
-## 👨‍💻 About
-
-Created by [Mohammad Dahamshi](https://github.com/mdahamshi) for [SaraWebs](https://sarawebs.com) to speed up React development with a clean and repeatable structure.
-
----
-
-## 📄 License
-
-MIT
+MIT — Feel free to use, modify, and contribute.
 
