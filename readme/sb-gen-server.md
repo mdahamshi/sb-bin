@@ -10,7 +10,13 @@
 * `.env` based configuration
 * Modular composable `db.user.getAll()` style access
 * Simple `queries/` folder for clean SQL
-* Auto-generated CRUD structure with custom script (`sb-gen-api.sh`)
+* Auto-generated CRUD structure with custom script (`sb-gen-api`)
+
+## Usage
+
+```bash
+sb-gen-server <serverName> # default = server
+```
 
 ---
 
@@ -89,7 +95,7 @@ You should get:
 Use `sb-gen-api.sh`:
 
 ```bash
-sb-gen-api.sh user
+sb-gen-api user
 ```
 
 This will generate:

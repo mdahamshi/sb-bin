@@ -14,7 +14,7 @@ npm install -g @sarawebs/sb-bin
 
 This will make the `sb-gen`, `sb-gen-api` command available globally from your terminal.
 
-## 1. `sb-gen-api.sh` — Express  + DB CRUD Generator
+## 1. `sb-gen-api` — Express  + DB CRUD Generator
 
 A bash script to quickly scaffold RESTful CRUD routes and controllers for your Node.js backend using Express and db.
 
@@ -37,7 +37,7 @@ A developer-friendly CLI tool to generate React components, hooks, pages, contex
 **See full details & usage:** [sb-gen README](./readme/sb-gen.md)
 
 ---
-API Server (PostgreSQL + Express + Composable DB Abstraction)
+## 3. `sb-gen-server`  API Server (PostgreSQL + Express + Composable DB Abstraction)
 A modern Express.js API boilerplate using Docker, PostgreSQL, and a modular database query abstraction 
 
 🚀 Features
@@ -77,7 +77,7 @@ api-server/
 
 * Creates routes & controller files for your model
 * Updates `src/routes/index.js` to register routes
-* Usage: `./sb-gen-api.sh User`
+* Usage: `./sb-gen-api User`
 
 ---
 
