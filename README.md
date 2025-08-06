@@ -14,9 +14,9 @@ npm install -g @sarawebs/sb-bin
 
 This will make the `sb-gen`, `sb-gen-api` command available globally from your terminal.
 
-## 1. `sb-gen-api.sh` — Express + Prisma CRUD Generator
+## 1. `sb-gen-api.sh` — Express  + DB CRUD Generator
 
-A bash script to quickly scaffold RESTful CRUD routes and controllers for your Node.js backend using Express and Prisma.
+A bash script to quickly scaffold RESTful CRUD routes and controllers for your Node.js backend using Express and db.
 
 * Generates route and controller files for a given model
 * Automatically updates or creates `src/routes/index.js` to register new routes

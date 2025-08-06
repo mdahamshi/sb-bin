@@ -1,14 +1,14 @@
 
 # CRUD Generator Script
 
-A simple Bash script to generate RESTful CRUD route and controller files for an Express + Prisma project, and automatically register the new routes in `src/routes/index.js`.
+A simple Bash script to generate RESTful CRUD route and controller files for an Express + db project, and automatically register the new routes in `src/routes/index.js`.
 
 ---
 
 ## Features
 
 * Creates route and controller files for a given model name.
-* Uses Prisma Client for database operations.
+* Uses pg Client for database operations.
 * Automatically updates (or creates) `src/routes/index.js` to import and register the new routes.
 * Prevents overwriting existing files.
 * Uses CommonJS style imports in `src/routes/index.js` to match existing code.
@@ -17,7 +17,7 @@ A simple Bash script to generate RESTful CRUD route and controller files for an 
 
 ## Requirements
 
-* Node.js project using **Express** and **Prisma**.
+* Node.js project using **Express** and **pg**.
 
 * Project directory structure with:
 
@@ -69,7 +69,7 @@ Express router with routes for:
 
 ### Controller file (`src/controllers/<modelName>Controller.js`)
 
-Contains CRUD functions using Prisma Client to interact with the database.
+Contains CRUD functions using pg Client to interact with the database.
 
 ### Routes index (`src/routes/index.js`)
 
