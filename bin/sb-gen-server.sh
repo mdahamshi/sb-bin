@@ -2,7 +2,7 @@
 
 set -e
 
-SERVER_NAME="${1:-api-server}"  # Use passed arg or default to 'api-server'
+SERVER_NAME="${1:-server}"  # Use passed arg or default to 'api-server'
 
 mkdir -p "$SERVER_NAME"/src/{controllers,db/queries,routes,utils}
 
