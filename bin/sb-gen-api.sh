@@ -141,7 +141,7 @@ EOF
 cat > "$controllerPath" <<EOF
 import db from '../db/db.js';
 
-export const getAll${ModelName}s = async (req, res) => {
+export const getAll${ModelName}s = async (req, res, next) => {
   try {
     const items = await db.${modelName}.getAll();
     res.json(items);
@@ -150,7 +150,7 @@ export const getAll${ModelName}s = async (req, res) => {
   }
 };
 
-export const get${ModelName}ById = async (req, res) => {
+export const get${ModelName}ById = async (req, res, next) => {
   const id = parseInt(req.params.id);
   try {
     const item = await db.${modelName}.getById([id]);
@@ -161,7 +161,7 @@ export const get${ModelName}ById = async (req, res) => {
   }
 };
 
-export const create${ModelName} = async (req, res) => {
+export const create${ModelName} = async (req, res, next) => {
   try {
     // NOTE: You must customize these params according to your model
     const { name, email } = req.body;
@@ -172,7 +172,7 @@ export const create${ModelName} = async (req, res) => {
   }
 };
 
-export const update${ModelName} = async (req, res) => {
+export const update${ModelName} = async (req, res, next) => {
   const id = parseInt(req.params.id);
   try {
     // NOTE: You must customize these params according to your model
@@ -184,7 +184,7 @@ export const update${ModelName} = async (req, res) => {
   }
 };
 
-export const delete${ModelName} = async (req, res) => {
+export const delete${ModelName} = async (req, res, next) => {
   const id = parseInt(req.params.id);
   try {
     await db.${modelName}.delete([id]);
@@ -200,15 +200,14 @@ EOF
 indexFile="$routesDir/index.js"
 
 importLine="import ${modelPlural}Routes from './${modelPlural}.js';"
-apiVersionLine="const apiV = process.env.API_VERSION;"
 routeLine="  app.use(\`/api/\${apiV}/${modelPlural}\`, ${modelPlural}Routes);"
 
 if [[ ! -f "$indexFile" ]]; then
   cat > "$indexFile" <<EOF
 $importLine
-$apiVersionLine
 
-function registerRoutes(app) {
+
+function registerRoutes(app, apiV) {
 $routeLine
 }
 
@@ -219,12 +218,9 @@ else
     sed -i "1i$importLine" "$indexFile"
   fi
 
-  if ! grep -qF "$apiVersionLine" "$indexFile"; then
-    sed -i "2i$apiVersionLine" "$indexFile"
-  fi
 
   if ! grep -qF "$routeLine" "$indexFile"; then
-    sed -i "/function registerRoutes(app) {/a\\
+    sed -i "/function registerRoutes(app, apiV) {/a\\
 $routeLine
 " "$indexFile"
   fi
