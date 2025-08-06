@@ -66,6 +66,7 @@ DB_USER=postgres
 DB_PASSWORD=postgres
 DB_NAME=mydb
 PORT=4000
+API_VERSION=v1
 EOF
 
 # package.json

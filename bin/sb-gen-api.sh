@@ -200,7 +200,7 @@ EOF
 indexFile="$routesDir/index.js"
 
 importLine="import ${modelPlural}Routes from './${modelPlural}.js';"
-apiVersionLine="const apiV = 'v1';"
+apiVersionLine="const apiV = process.env.API_VERSION;"
 routeLine="  app.use(\`/api/\${apiV}/${modelPlural}\`, ${modelPlural}Routes);"
 
 if [[ ! -f "$indexFile" ]]; then
