@@ -1,36 +1,9 @@
-# 🧱 `sb-gen` — Simple Boilerplate Code Generator
 
-A developer-friendly CLI utility to quickly scaffold React boilerplate files in your project structure.
-Easily generate components, hooks, tests, pages, and context files using intuitive commands.
+# SB Code Generator Utilities 
 
----
-
-## 🚀 Features
-
-* 🔧 Generate React components with boilerplate
-* 🪝 Create custom hooks with sensible defaults
-* 🧪 Add test files for your components
-* 📄 Scaffold page files for routing
-* 🧠 Create React context providers and hooks
-* ✨ Supports multiple entries per type in a single command
-* 📁 Automatically places files in the correct `src/` subfolders
+This repository contains two handy CLI utilities to speed up your development workflow by automating boilerplate code generation:
 
 ---
-
-## 📁 Folder Structure
-
-```bash
-src/
-├── assets/            # images, logos, etc.
-├── components/        # reusable components (Navbar, ProductCard, etc.)
-├── context/           # global state with React context
-├── hooks/             # custom React hooks
-├── pages/             # main views like Home, Cart, Shop
-├── tests/             # unit tests
-```
-
----
-
 ## 🛠 Installation
 
 Install globally using npm:
@@ -39,69 +12,82 @@ Install globally using npm:
 npm install -g @sarawebs/sb-bin
 ```
 
-This will make the `sb-gen` command available globally from your terminal.
+This will make the `sb-gen`, `sb-gen-api` command available globally from your terminal.
+
+## 1. `sb-gen-api.sh` — Express + Prisma CRUD Generator
+
+A bash script to quickly scaffold RESTful CRUD routes and controllers for your Node.js backend using Express and Prisma.
+
+* Generates route and controller files for a given model
+* Automatically updates or creates `src/routes/index.js` to register new routes
+* Prevents overwriting existing files
+
+**See full details & usage:** [sb-gen-api README](./readme/sb-gen-api.md)
 
 ---
 
-## 💻 Usage
+## 2. `sb-gen` — React Boilerplate Code Generator CLI
 
-```bash
-sb-gen [flags] [names...]
-```
+A developer-friendly CLI tool to generate React components, hooks, pages, contexts, and test files with proper boilerplate and placement in your project structure.
 
-### ✅ Supported Flags
+* Supports multiple types in a single command
+* Automatically handles naming conventions and folder locations
+* Creates React functional components, hooks, contexts, and tests
 
-| Flag          | Alias | Description                      | Target Directory  |
-| ------------- | ----- | -------------------------------- | ----------------- |
-| `--component` | `-c`  | Create React components          | `src/components/` |
-| `--hook`      | `-h`  | Create custom React hooks        | `src/hooks/`      |
-| `--test`      | `-t`  | Create test files                | `src/tests/`      |
-| `--page`      | `-p`  | Create React pages               | `src/pages/`      |
-| `--context`   | `-x`  | Create React context boilerplate | `src/context/`    |
+**See full details & usage:** [sb-gen README](./readme/sb-gen.md)
+
+---
+API Server (PostgreSQL + Express + Composable DB Abstraction)
+A modern Express.js API boilerplate using Docker, PostgreSQL, and a modular database query abstraction 
+
+🚀 Features
+Express + Dockerized PostgreSQL setup
+
+.env based configuration
+
+Modular composable db.user.getAll() style access
+
+Simple queries/ folder for clean SQL
+
+Auto-generated CRUD structure with custom script (sb-gen-api.sh)
+
+📂 Project Structure
+graphql
+Copy
+Edit
+api-server/
+├── src/
+│   ├── controllers/     # CRUD logic using db abstraction
+│   ├── db/
+│   │   ├── db.js        # db.user.getAll-style API
+│   │   └── queries/     # SQL strings per model
+│   ├── routes/          # Express routers
+│   ├── utils/           # Utility modules (if needed)
+│   └── index.js         # App entrypoint
+├── Dockerfile
+├── docker-compose.yml
+├── init.sql             # DB schema initializer
+├── .env
+└── package.json
+
+**See full details & usage:** [sb-gen-server README](./readme/sb-gen-server.md)
+
+
+### sb-gen-api.sh — Express +  CRUD Generator
+
+* Creates routes & controller files for your model
+* Updates `src/routes/index.js` to register routes
+* Usage: `./sb-gen-api.sh User`
 
 ---
 
-## ✨ Examples
+### sb-gen — Simple Boilerplate Code Generator
 
-```bash
-sb-gen -c Navbar Footer -h auth fetchUser -t Navbar -p Home Shop -x Cart
-```
-
-📦 This creates:
-
-```
-src/components/Navbar.jsx
-src/components/Footer.jsx
-src/hooks/useAuth.jsx
-src/hooks/useFetchUser.jsx
-src/tests/Navbar.test.jsx
-src/pages/Home.jsx
-src/pages/Shop.jsx
-src/context/CartContext.jsx
-```
+* Generates React components, hooks, pages, contexts, and tests
+* CLI usage: `sb-gen [flags] [names...]`
+* Example: `sb-gen -c Navbar Footer -h auth fetchUser -t Navbar -p Home Shop -x Cart`
 
 ---
 
-## 📚 Boilerplate Overview
-
-* **Component:** Functional React component
-* **Hook:** Custom `useX` hook
-* **Test:** React Testing Library setup
-* **Page:** Basic functional component
-* **Context:** Provider + custom hook for usage
-
----
-
-## 📌 Notes
-
-* Component and context names are automatically capitalized.
-* Hook names are prefixed with `use` if not already.
-* All files use `.jsx` extension.
-* Works best inside a standard React app using the described folder structure.
-
----
-
-## 🧩 License
-
-MIT — Feel free to use, modify, and contribute.
+Feel free to explore either tool to boost your backend or frontend development speed!
 

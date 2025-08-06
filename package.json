@@ -3,7 +3,9 @@
   "version": "2.0.1",
   "description": "CLI tools for SaraWebs dev workflow",
   "bin": {
-    "sb-gen": "bin/sb-gen.js"
+    "sb-gen": "bin/sb-gen.js",
+    "sb-gen-api": "bin/sb-gen-api.sh",
+    "sb-gen-server": "bin/sb-gen-server.sh"
   },
   "scripts": {
     "format": "npx prettier --write ."
