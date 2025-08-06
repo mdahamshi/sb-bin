@@ -138,6 +138,13 @@ echo "✅ Project created in ./$SERVER_NAME
 ➡ Navigate to '$SERVER_NAME' and run:
    docker compose up --build
 
+- Try visitng:
+  http://localhost:4000/api/health
+
+You should get:
+{"status":"ok","message":"API is healthy 🚀"}
+
+
 📥 To init table:
    docker exec -i ${SERVER_NAME}-postgres psql -U postgres -d mydb < init.sql
 "
