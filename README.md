@@ -52,9 +52,8 @@ Simple queries/ folder for clean SQL
 Auto-generated CRUD structure with custom script (sb-gen-api.sh)
 
 📂 Project Structure
-graphql
-Copy
-Edit
+
+```
 api-server/
 ├── src/
 │   ├── controllers/     # CRUD logic using db abstraction
@@ -69,7 +68,7 @@ api-server/
 ├── init.sql             # DB schema initializer
 ├── .env
 └── package.json
-
+```
 **See full details & usage:** [sb-gen-server README](./readme/sb-gen-server.md)
 
 
