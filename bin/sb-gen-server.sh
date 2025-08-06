@@ -137,10 +137,10 @@ app.use((req, res, next) => {
 });
 
 // Error handler
-app.use((err, req, res, next) => {
-  res.status(404).json({
+  const status = err.status || 500;
+  res.status(status).json({
     error: true,
-    status: 404,
+    status,
     message: err.message || 'Internal Server Error',
   });
 });

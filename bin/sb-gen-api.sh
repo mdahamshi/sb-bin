@@ -146,7 +146,7 @@ export const getAll${ModelName}s = async (req, res) => {
     const items = await db.${modelName}.getAll();
     res.json(items);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
@@ -157,7 +157,7 @@ export const get${ModelName}ById = async (req, res) => {
     if (!item) return res.status(404).json({ error: '${ModelName} not found' });
     res.json(item);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
@@ -168,7 +168,7 @@ export const create${ModelName} = async (req, res) => {
     const newItem = await db.${modelName}.create([name, email]);
     res.status(201).json(newItem);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error);
   }
 };
 
@@ -180,7 +180,7 @@ export const update${ModelName} = async (req, res) => {
     const updatedItem = await db.${modelName}.update([name, email, id]);
     res.json(updatedItem);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error);
   }
 };
 
@@ -190,7 +190,7 @@ export const delete${ModelName} = async (req, res) => {
     await db.${modelName}.delete([id]);
     res.json({ message: '${ModelName} deleted' });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error);
   }
 };
 EOF
