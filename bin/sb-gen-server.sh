@@ -93,7 +93,7 @@ EOF
 
 cd $SERVER_NAME
 # Try to run sb-gen-api.sh user from PATH or locally
-if ! sb-gen-api.sh user 2>/dev/null; then
+if ! sb-gen-api user 2>/dev/null; then
   if [ -x "../sb-gen-api.sh" ]; then
     ../sb-gen-api.sh user
   else
