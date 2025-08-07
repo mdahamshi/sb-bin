@@ -51,11 +51,24 @@ api-server/
 
 ## 2. `sb-gen-api` — Express  + DB CRUD Generator
 
-A bash script to quickly scaffold RESTful CRUD routes and controllers for your Node.js backend using Express and db.
 
-* Generates route and controller files for a given model
-* Automatically updates or creates `src/routes/index.js` to register new routes
-* Prevents overwriting existing files
+**Example:**
+
+```bash
+sb-gen-api User
+```
+
+
+* Creates route, controller, and query files for a given model name.
+* Uses pg client (`pool.js`) for database operations.
+* Automatically updates (or creates):
+
+  * `src/routes/index.js` to import/register the route
+  * `src/db/db.js` to register the model
+* Prevents overwriting existing files.
+* Cleanly removes all generated files and related registrations.
+* Uses ESM style imports throughout.
+
 
 **See full details & usage:** [sb-gen-api README](./readme/sb-gen-api.md)
 
