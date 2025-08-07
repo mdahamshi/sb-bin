@@ -1,7 +1,52 @@
 #!/bin/bash
 
+# -------------------------
+# Handle model removal
+# -------------------------
+if [[ "$1" == "remove" && -n "$2" ]]; then
+  modelNameRaw="$2"
+  modelName=$(echo "$modelNameRaw" | tr '[:upper:]' '[:lower:]')
+  ModelName="$(tr '[:lower:]' '[:upper:]' <<< ${modelNameRaw:0:1})${modelNameRaw:1}"
+  modelPlural="${modelName}s"
+
+  baseDir=$(pwd)
+  routesPath="$baseDir/src/routes/${modelPlural}.js"
+  controllerPath="$baseDir/src/controllers/${modelName}Controller.js"
+  queryPath="$baseDir/src/db/queries/${modelName}.js"
+  dbFile="$baseDir/src/db/db.js"
+  indexFile="$baseDir/src/routes/index.js"
+
+  echo "🗑 Removing files and references for model \"$ModelName\"..."
+
+  read -p "Are you sure you want to delete model \"$ModelName\"? (y/N): " confirm
+  if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+    echo "❌ Cancelled."
+    exit 1
+  fi
+
+  rm -f "$routesPath" "$controllerPath" "$queryPath"
+
+  if [[ -f "$dbFile" ]]; then
+    sed -i "/import ${modelName} from '.\/queries\/${modelName}.js';/d" "$dbFile"
+    sed -i "/\b${modelName},\b/d" "$dbFile"
+  fi
+
+  if [[ -f "$indexFile" ]]; then
+    sed -i "/import ${modelPlural}Routes from '.\/${modelPlural}.js';/d" "$indexFile"
+    sed -i "/app.use(\`\/api\/\\\${apiV}\/${modelPlural}\`, ${modelPlural}Routes);/d" "$indexFile"
+  fi
+
+  echo "✅ Model \"$ModelName\" removed."
+  exit 0
+fi
+
+# -------------------------
+# Handle model creation
+# -------------------------
 if [ -z "$1" ]; then
-  echo "Usage: $0 <ModelName>"
+  echo "Usage:"
+  echo "  $0 <ModelName>        # to generate CRUD"
+  echo "  $0 remove <ModelName> # to remove CRUD"
   exit 1
 fi
 
@@ -17,7 +62,6 @@ queriesDir="$baseDir/src/db/queries"
 dbFile="$baseDir/src/db/db.js"
 poolFile="$baseDir/src/db/pool.js"
 
-
 mkdir -p "$routesDir" "$controllersDir" "$queriesDir"
 
 routesPath="$routesDir/${modelPlural}.js"
@@ -25,14 +69,14 @@ controllerPath="$controllersDir/${modelName}Controller.js"
 queryPath="$queriesDir/${modelName}.js"
 
 if [[ -f "$routesPath" || -f "$controllerPath" || -f "$queryPath" ]]; then
-  echo "Error: One or more files already exist:
-- $routesPath
-- $controllerPath
-- $queryPath"
+  echo "❌ Error: One or more files already exist:"
+  [[ -f "$routesPath" ]] && echo "- $routesPath"
+  [[ -f "$controllerPath" ]] && echo "- $controllerPath"
+  [[ -f "$queryPath" ]] && echo "- $queryPath"
   exit 1
 fi
 
-# create pool.js
+# Create pool.js
 if [[ ! -f "$poolFile" ]]; then
 cat > "$poolFile" <<EOF
 import { Pool } from 'pg';
@@ -92,7 +136,7 @@ export default ${modelName};
 EOF
 
 # -------------------------
-# Create db.js or update it cleanly
+# Create or update db.js
 # -------------------------
 if [[ ! -f "$dbFile" ]]; then
   cat > "$dbFile" <<EOF
@@ -118,6 +162,7 @@ else
 " "$dbFile"
   fi
 fi
+
 # -------------------------
 # Create Routes
 # -------------------------
@@ -135,6 +180,7 @@ router.delete('/:id', delete${ModelName});
 
 export default router;
 EOF
+
 # -------------------------
 # Create Controller
 # -------------------------
@@ -163,7 +209,6 @@ export const get${ModelName}ById = async (req, res, next) => {
 
 export const create${ModelName} = async (req, res, next) => {
   try {
-    // NOTE: You must customize these params according to your model
     const { name, email } = req.body;
     const newItem = await db.${modelName}.create([name, email]);
     res.status(201).json(newItem);
@@ -175,7 +220,6 @@ export const create${ModelName} = async (req, res, next) => {
 export const update${ModelName} = async (req, res, next) => {
   const id = parseInt(req.params.id);
   try {
-    // NOTE: You must customize these params according to your model
     const { name, email } = req.body;
     const updatedItem = await db.${modelName}.update([name, email, id]);
     res.json(updatedItem);
@@ -194,6 +238,7 @@ export const delete${ModelName} = async (req, res, next) => {
   }
 };
 EOF
+
 # -------------------------
 # Update Routes Index (ESM)
 # -------------------------
@@ -206,7 +251,6 @@ if [[ ! -f "$indexFile" ]]; then
   cat > "$indexFile" <<EOF
 $importLine
 
-
 function registerRoutes(app, apiV) {
 $routeLine
 }
@@ -218,7 +262,6 @@ else
     sed -i "1i$importLine" "$indexFile"
   fi
 
-
   if ! grep -qF "$routeLine" "$indexFile"; then
     sed -i "/function registerRoutes(app, apiV) {/a\\
 $routeLine
@@ -229,7 +272,6 @@ $routeLine
     echo -e "\nexport default registerRoutes;" >> "$indexFile"
   fi
 fi
-
 
 echo "✅ CRUD for model \"$ModelName\" generated:
 - ✔ $routesPath

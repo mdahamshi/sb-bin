@@ -103,15 +103,19 @@ Use `sb-gen-api.sh`:
 sb-gen-api user
 ```
 
-This will generate:
 
-* `src/db/queries/user.js` – SQL strings
-* `src/controllers/user.js` – Logic using `db.user.getAll`, etc.
-* `src/routes/user.js` – RESTful router
-* Auto-registers route in `src/routes/index.js`
-* Auto-registers query in `src/db/db.js`
+* Creates route, controller, and query files for a given model name.
+* Uses pg client (`pool.js`) for database operations.
+* Automatically updates (or creates):
+
+  * `src/routes/index.js` to import/register the route
+  * `src/db/db.js` to register the model
+* Prevents overwriting existing files.
+* Cleanly removes all generated files and related registrations.
+* Uses ESM style imports throughout.
 
 ---
+
 
 ### 📦 DB Abstraction
 
