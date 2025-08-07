@@ -101,7 +101,7 @@ cat > "$SERVER_NAME/package.json" <<'EOF'
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon --require dotenv/config  src/index.js",
     "start": "node src/index.js"
   },
   "dependencies": {
