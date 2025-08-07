@@ -28,7 +28,7 @@ if [[ "$1" == "remove" && -n "$2" ]]; then
 
   if [[ -f "$dbFile" ]]; then
     sed -i "/import ${modelName} from '.\/queries\/${modelName}.js';/d" "$dbFile"
-    sed -i "/\b${modelName},\b/d" "$dbFile"
+    sed -i "/^\s*${modelName},\s*$/d" "$dbFile"
   fi
 
   if [[ -f "$indexFile" ]]; then
