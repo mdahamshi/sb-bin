@@ -28,13 +28,14 @@ api-server/
 │   ├── controllers/     # CRUD logic using db abstraction
 │   ├── db/
 │   │   ├── db.js        # db.user.getAll-style API
-│   │   └── queries/     # SQL strings per model
+│   │   ├── queries/     # SQL strings per model
+│   │   └── init/        # SQL schem, seed
 │   ├── routes/          # Express routers
 │   ├── utils/           # Utility modules (if needed)
 │   └── index.js         # App entrypoint
 ├── Dockerfile
 ├── docker-compose.yml
-├── init.sql             # DB schema initializer
+├── docker-compose.override.yml
 ├── .env
 └── package.json
 ```
