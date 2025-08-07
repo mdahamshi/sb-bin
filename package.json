@@ -30,6 +30,9 @@
     "crud",
     "rest-api",
     "postgres",
+    "sb-gen",
+    "sb-gen-api",
+    "sb-gen-server",
     "sb-bin"
   ],
   "devDependencies": {
