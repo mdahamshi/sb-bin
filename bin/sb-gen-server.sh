@@ -4,7 +4,7 @@ set -e
 
 SERVER_NAME="${1:-server}"  # Use passed arg or default to 'api-server'
 
-mkdir -p "$SERVER_NAME"/src/{controllers,db/queries,routes,utils}
+mkdir -p "$SERVER_NAME"/src/{controllers,db/{init,queries},routes,utils}
 
 # docker-compose.yml
 cat > "$SERVER_NAME/docker-compose.yml" <<EOF
