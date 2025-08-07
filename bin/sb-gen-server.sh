@@ -49,6 +49,16 @@ networks:
 EOF
 
 # gitignore
+cat > "$SERVER_NAME/docker-compose.override.yml" <<'EOF'
+services:
+  postgres:
+    ports:
+    - 5432:5432
+EOF
+
+
+
+# gitignore
 cat > "$SERVER_NAME/.gitignore" <<'EOF'
 .env
 node_modules
