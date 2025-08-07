@@ -1,6 +1,6 @@
 {
   "name": "@sarawebs/sb-bin",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "CLI tools for SaraWebs dev workflow",
   "bin": {
     "sb-gen": "bin/sb-gen.js",
