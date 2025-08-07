@@ -6,43 +6,55 @@ SERVER_NAME="${1:-server}"  # Use passed arg or default to 'api-server'
 
 mkdir -p "$SERVER_NAME"/src/{controllers,db/{init,queries},routes,utils}
 
+app_id=$(printf "%04d\n" $((RANDOM % 10000)))
 # docker-compose.yml
 cat > "$SERVER_NAME/docker-compose.yml" <<EOF
 services:
   api:
     build: .
-    container_name: ${SERVER_NAME}
+    container_name: sara-${app_id}
+    restart: always
     ports:
-      - "4000:4000"
+      - \${API_PORT}:\${PORT}
     environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_NAME=mydb
+      - DB_USER=\${SERVICE_USER_POSTGRES}
+      - DB_PASSWORD=\${SERVICE_PASSWORD_POSTGRES}
+      - DB_NAME=\${SERVICE_USER_POSTGRES}
+      - DATABASE_URL=postgres://\${SERVICE_USER_POSTGRES}:\${SERVICE_PASSWORD_POSTGRES}@postgres:\${DB_PORT}/\${SERVICE_USER_POSTGRES}
+      - PORT=\${PORT}
     depends_on:
-      - db
-    volumes:
-      - .:/app
+      - postgres
+    networks:
+      - appnet
     command: node src/index.js
 
-  db:
+  postgres:
     image: postgres:15
-    container_name: ${SERVER_NAME}-postgres
+    container_name: sara-postgres-${app_id}
     restart: always
+    networks:
+      - appnet
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mydb
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: \${SERVICE_USER_POSTGRES}
+      POSTGRES_PASSWORD: \${SERVICE_PASSWORD_POSTGRES}
+      POSTGRES_DB: \${SERVICE_USER_POSTGRES}
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./db/init:/docker-entrypoint-initdb.d
+      - ./src/db/init:/docker-entrypoint-initdb.d
 
 volumes:
   pgdata:
+networks:
+  appnet:
 EOF
+
+# gitignore
+cat > "$SERVER_NAME/.gitignore" <<'EOF'
+.env
+node_modules
+.vscode
+EOF
+
 
 # Dockerfile
 cat > "$SERVER_NAME/Dockerfile" <<'EOF'
@@ -61,13 +73,14 @@ EOF
 
 # .env
 cat > "$SERVER_NAME/.env" <<'EOF'
-DB_HOST=db
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=mydb
+# API
 PORT=4000
-API_VERSION=v1
+API_PORT=4000
+DB_PORT=5432
+# DB Credentials
+SERVICE_USER_POSTGRES=userapp
+SERVICE_PASSWORD_POSTGRES=secret
+
 EOF
 
 # package.json
@@ -144,7 +157,9 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', message: 'API is healthy 🚀' });
 });
 
-registerRoutes(app, process.env.API_VERSION);
+const API_VERSION = process.env.API_VERSION || 'v1';
+registerRoutes(app, API_VERSION);
+
 
 
 
