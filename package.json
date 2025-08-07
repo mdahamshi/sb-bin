@@ -23,6 +23,13 @@
     "bin",
     "component",
     "sarawebs",
+    "server",
+    "express",
+    "node",
+    "databse",
+    "crud",
+    "rest-api",
+    "postgres",
     "sb-bin"
   ],
   "devDependencies": {
