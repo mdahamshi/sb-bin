@@ -47,12 +47,16 @@ api-server/
 Located in `.env`:
 
 ```
-DB_HOST=db
+# API
+PORT=4000  # local port (inside container or when dev)
+API_PORT=4000  # mapped port to localhost
 DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=postgres
-DB_NAME=mydb
-PORT=4000
+# DB Credentials
+SERVICE_USER_POSTGRES=userapp  # coolify magic env vars style
+SERVICE_PASSWORD_POSTGRES=secret
+
+DATABASE_URL=postgres://userapp:secret@localhost:5432/userapp
+
 ```
 
 ---
@@ -69,15 +73,15 @@ docker compose up --build
 This will:
 
 * Start the Express app on port `4000`
-* Spin up a PostgreSQL 15 container with DB `mydb`
+* Spin up a PostgreSQL 15 container with DB `userapp`
 
 #### 2. Initialize Database Schema
 
-After the containers are running, run:
+Databse is initilized automaticlly by two files at src/db/init:
+- init.sql  # have the sql schema
+- seed.sql  # have the seed data
 
-```bash
-docker exec -i api-postgres psql -U postgres -d mydb < init.sql
-```
+
 
 This will create the `users` table.
 
@@ -105,6 +109,7 @@ This will generate:
 * `src/controllers/user.js` – Logic using `db.user.getAll`, etc.
 * `src/routes/user.js` – RESTful router
 * Auto-registers route in `src/routes/index.js`
+* Auto-registers query in `src/db/db.js`
 
 ---
 
@@ -113,17 +118,14 @@ This will generate:
 In `src/db/db.js`, all queries are composed like this:
 
 ```js
-import userQueries from './queries/user.js';
+import user from './queries/user.js';
 
 const db = {
-  user: {
-    getAll: async () => { /* use userQueries.getAll */ },
-    getById: async (id) => { /* use userQueries.getById */ },
-    ...
-  }
+  user
 };
 
 export default db;
+
 ```
 
 Usage in controller:
