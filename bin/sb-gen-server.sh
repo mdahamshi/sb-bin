@@ -38,6 +38,7 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
 
 volumes:
   pgdata:
@@ -173,7 +174,7 @@ app.listen(PORT, () => {
 EOF
 
 # init.sql
-cat > "$SERVER_NAME/init.sql" <<'EOF'
+cat > "$SERVER_NAME/src/db/init/init.sql" <<'EOF'
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
@@ -181,6 +182,14 @@ CREATE TABLE IF NOT EXISTS users (
 );
 EOF
 
+# seed.sql
+cat > "$SERVER_NAME/src/db/init/seed.sql" <<'EOF'
+-- Insert dummy users
+INSERT INTO users (name, email) VALUES
+('Sarah Dahamshi', 'sarah@example.com'),
+('Amenah Dahamshi', 'Amenah@example.com'),
+('Salmah Dahamshi', 'Salmah@example.com');
+EOF
 echo "✅ Project created in ./$SERVER_NAME
 
 ➡ Navigate to '$SERVER_NAME' and run:
