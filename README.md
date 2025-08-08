@@ -58,6 +58,8 @@ api-server/
 sb-gen-api User
 ```
 
+> **⚠️ Deprecated:**
+> This tool is no longer actively maintained. For a more robust and feature-rich solution, please visit and use [sb-crud-gen on npm](https://www.npmjs.com/package/sb-crud-gen).
 
 * Creates route, controller, and query files for a given model name.
 * Uses pg client (`pool.js`) for database operations.
