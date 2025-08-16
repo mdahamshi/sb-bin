@@ -1,0 +1,33 @@
+services:
+  api:
+    build: .
+    container_name: sara-${app_id}
+    restart: always
+    ports:
+      - \${API_PORT}:\${PORT}
+    environment:
+      - DB_USER=\${SERVICE_USER_POSTGRES}
+      - DB_PASSWORD=\${SERVICE_PASSWORD_POSTGRES}
+      - DB_NAME=\${SERVICE_USER_POSTGRES}
+      - DATABASE_URL=postgres://\${SERVICE_USER_POSTGRES}:\${SERVICE_PASSWORD_POSTGRES}@postgres:\${DB_PORT}/\${SERVICE_USER_POSTGRES}
+      - PORT=\${PORT}
+    depends_on:
+      - postgres
+
+    command: node src/index.js
+
+  postgres:
+    image: postgres:15
+    container_name: sara-postgres-${app_id}
+    restart: always
+
+    environment:
+      POSTGRES_USER: \${SERVICE_USER_POSTGRES}
+      POSTGRES_PASSWORD: \${SERVICE_PASSWORD_POSTGRES}
+      POSTGRES_DB: \${SERVICE_USER_POSTGRES}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./src/db/init:/docker-entrypoint-initdb.d
+
+volumes:
+  pgdata:
