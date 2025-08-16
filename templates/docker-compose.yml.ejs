@@ -3,7 +3,8 @@ services:
     build: .
     container_name: sara-<% appId %>
     restart: always
-
+    networks:
+      - appnet-<% appId %>
     environment:
       - DB_USER=${SERVICE_USER_POSTGRES}
       - DB_PASSWORD=${SERVICE_PASSWORD_POSTGRES}
@@ -17,9 +18,10 @@ services:
 
   postgres:
     image: postgres:15
-    container_name: sara-postgres-${app_id}
+    container_name: sara-postgres-<% appId %>
     restart: always
-
+    networks:
+      - appnet-<% appId %>
     environment:
       POSTGRES_USER: ${SERVICE_USER_POSTGRES}
       POSTGRES_PASSWORD: ${SERVICE_PASSWORD_POSTGRES}
@@ -30,3 +32,5 @@ services:
 
 volumes:
   pgdata:
+networks:
+  appnet-<% appId %>:
