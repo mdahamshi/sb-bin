@@ -55,7 +55,7 @@ api-server/
 **Example:**
 
 ```bash
-sb-gen-api User
+sb-gen-api user name:string age:int
 ```
 
 > **⚠️ Deprecated:**

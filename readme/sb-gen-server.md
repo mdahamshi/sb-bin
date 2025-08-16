@@ -26,10 +26,6 @@ sb-gen-server <serverName> # default = server
 api-server/
 ├── src/
 │   ├── controllers/     # CRUD logic using db abstraction
-│   ├── db/
-│   │   ├── db.js        # db.user.getAll-style API
-│   │   ├── queries/     # SQL strings per model
-│   │   └── init/        # SQL schem, seed
 │   ├── routes/          # Express routers
 │   ├── utils/           # Utility modules (if needed)
 │   └── index.js         # App entrypoint
@@ -75,17 +71,6 @@ This will:
 * Start the Express app on port `4000`
 * Spin up a PostgreSQL 15 container with DB `userapp`
 
-#### 2. Initialize Database Schema
-
-Databse is initilized automaticlly by two files at src/db/init:
-- init.sql  # have the sql schema
-- seed.sql  # have the seed data
-
-
-
-This will create the `users` table.
-
----
 
 #### 3. Check API
 Try visitng:
@@ -100,7 +85,15 @@ You should get:
 Use `sb-gen-api.sh`:
 
 ```bash
-sb-gen-api user
+sb-gen-api user name:string age:int
+```
+
+### 🛠️ Change config.json
+
+Use `sb-gen-server --init-config`:
+
+```bash
+sb-gen-server --init-config # copy default config.json to current dir, you can change it as you need
 ```
 
 
