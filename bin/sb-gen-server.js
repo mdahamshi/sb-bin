@@ -108,6 +108,7 @@ async function main() {
   // Run sb-crud-gen dynamically
   if (config.runCrudGen && Array.isArray(config.crudList)) {
     let command = "sb-crud-gen";
+    
     if (config.query === "prisma") {
       await renderTemplate(
         path.join(templatesDir, "src/utils/prisma.js.ejs"),
@@ -121,7 +122,7 @@ async function main() {
     for (const entity of config.crudList) {
       const entityName = typeof entity === "string" ? entity : entity.name;
       const entityFields = entity.fields || [];
-      console.log(`⚙️  Running sb-crud-gen for: ${entityName}...`);
+      console.log(`⚙️  Running ${command} for: ${entityName}...`);
       const result = spawnSync(
         "npx",
         [command, "create", entityName, ...entityFields],
@@ -132,7 +133,7 @@ async function main() {
         },
       );
       if (result.error) {
-        console.error(`❌ sb-crud-gen failed for ${entityName}:`, result.error);
+        console.error(`❌ ${command} failed for ${entityName}:`, result.error);
         process.exit(1);
       }
     }

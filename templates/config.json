@@ -20,5 +20,5 @@
   "crudList": [
     { "name": "user", "fields": ["name:string", "email:string", "age:int"] }
   ],
-  "query": "prsima"
+  "query": "prisma"
 }
