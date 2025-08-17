@@ -7,6 +7,7 @@
     },
     { "src": "Dockerfile.ejs", "dest": "Dockerfile" },
     { "src": ".gitignore.ejs", "dest": ".gitignore" },
+    { "src": ".prettierrc.ejs", "dest": ".prettierrc" },
     { "src": ".env.ejs", "dest": ".env" },
     { "src": "src/index.js.ejs", "dest": "src/index.js" },
     { "src": "src/expressInit.js.ejs", "dest": "src/expressInit.js" },
@@ -16,5 +17,8 @@
   ],
   "packageTemplate": "package.json.ejs",
   "runCrudGen": true,
-  "crudList": [{"name": "user", "fields": ["name:string", "email:string", "age:int"]}]
+  "crudList": [
+    { "name": "user", "fields": ["name:string", "email:string", "age:int"] }
+  ],
+  "query": "prsima"
 }

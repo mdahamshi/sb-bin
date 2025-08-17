@@ -1,4 +1,3 @@
-
 ## CRUD Generator Script
 
 A simple Bash script to generate RESTful CRUD route and controller files for an Express + PostgreSQL project, and automatically register the new routes in `src/routes/index.js`.
@@ -7,23 +6,23 @@ A simple Bash script to generate RESTful CRUD route and controller files for an 
 
 ## Features
 
-* Creates route, controller, and query files for a given model name.
-* Uses pg client (`pool.js`) for database operations.
-* Automatically updates (or creates):
+- Creates route, controller, and query files for a given model name.
+- Uses pg client (`pool.js`) for database operations.
+- Automatically updates (or creates):
+  - `src/routes/index.js` to import/register the route
+  - `src/db/db.js` to register the model
 
-  * `src/routes/index.js` to import/register the route
-  * `src/db/db.js` to register the model
-* Prevents overwriting existing files.
-* Cleanly removes all generated files and related registrations.
-* Uses ESM style imports throughout.
+- Prevents overwriting existing files.
+- Cleanly removes all generated files and related registrations.
+- Uses ESM style imports throughout.
 
 ---
 
 ## Requirements
 
-* Node.js project using **Express** and **pg**
+- Node.js project using **Express** and **pg**
 
-* Project directory structure:
+- Project directory structure:
 
   ```
   src/
@@ -33,10 +32,10 @@ A simple Bash script to generate RESTful CRUD route and controller files for an 
       pool.js
       queries/
     routes/
-      index.js 
+      index.js
   ```
 
-* Bash shell environment.
+- Bash shell environment.
 
 ---
 
@@ -56,13 +55,12 @@ sb-gen-api User
 
 This will create:
 
-* `src/routes/users.js`
-* `src/controllers/userController.js`
-* `src/db/queries/user.js`
-* Auto-register in:
-
-  * `src/routes/index.js` (under `/api/v1/users`)
-  * `src/db/db.js` (as `db.user`)
+- `src/routes/users.js`
+- `src/controllers/userController.js`
+- `src/db/queries/user.js`
+- Auto-register in:
+  - `src/routes/index.js` (under `/api/v1/users`)
+  - `src/db/db.js` (as `db.user`)
 
 ---
 
@@ -80,16 +78,16 @@ sb-gen-api remove User
 
 This will:
 
-* Delete:
+- Delete:
+  - `src/routes/users.js`
+  - `src/controllers/userController.js`
+  - `src/db/queries/user.js`
 
-  * `src/routes/users.js`
-  * `src/controllers/userController.js`
-  * `src/db/queries/user.js`
-* Cleanly remove:
+- Cleanly remove:
+  - Import and usage from `src/routes/index.js`
+  - Import and reference from `src/db/db.js`
 
-  * Import and usage from `src/routes/index.js`
-  * Import and reference from `src/db/db.js`
-* Prompt for confirmation before deletion
+- Prompt for confirmation before deletion
 
 ---
 
@@ -99,11 +97,11 @@ This will:
 
 Express router with:
 
-* `GET /` — Get all items
-* `GET /:id` — Get item by ID
-* `POST /` — Create item
-* `PUT /:id` — Update item
-* `DELETE /:id` — Delete item
+- `GET /` — Get all items
+- `GET /:id` — Get item by ID
+- `POST /` — Create item
+- `PUT /:id` — Update item
+- `DELETE /:id` — Delete item
 
 ### Controller file (`src/controllers/<modelName>Controller.js`)
 
@@ -121,10 +119,10 @@ Imports and registers all routes under `/api/v1/<modelPlural>` paths.
 
 ## Notes
 
-* Model name is case-insensitive; it's normalized and pluralized by adding an `s`.
-* If files for the model already exist, the script will abort.
-* Uses API version `v1` (you can change in `index.js`).
-* Make sure your main `src/index.js` imports and uses the route register function.
+- Model name is case-insensitive; it's normalized and pluralized by adding an `s`.
+- If files for the model already exist, the script will abort.
+- Uses API version `v1` (you can change in `index.js`).
+- Make sure your main `src/index.js` imports and uses the route register function.
 
 ---
 
@@ -154,4 +152,3 @@ app.listen(port, () => {
 ## License
 
 MIT License
-

@@ -47,12 +47,10 @@ async function updatePackageJson(projectRoot, pkgTemplateFile, data) {
 }
 
 async function main() {
-  const argv = yargs(hideBin(process.argv))
-    .option("init-config", {
-      type: "boolean",
-      description: "Copy default config.json to current working directory",
-    })
-    .argv;
+  const argv = yargs(hideBin(process.argv)).option("init-config", {
+    type: "boolean",
+    description: "Copy default config.json to current working directory",
+  }).argv;
 
   const serverName = argv._[0] || "server";
   const projectRoot = path.resolve(process.cwd(), serverName);
@@ -92,7 +90,7 @@ async function main() {
     await renderTemplate(
       path.join(templatesDir, src),
       path.join(projectRoot, dest),
-      context
+      context,
     );
   }
 
@@ -101,7 +99,7 @@ async function main() {
     await updatePackageJson(
       projectRoot,
       path.join(templatesDir, config.packageTemplate),
-      context
+      context,
     );
   }
 
@@ -109,15 +107,30 @@ async function main() {
 
   // Run sb-crud-gen dynamically
   if (config.runCrudGen && Array.isArray(config.crudList)) {
+    let command = "sb-crud-gen";
+    if (config.query === "prisma") {
+      await renderTemplate(
+        path.join(templatesDir, "src/utils/prisma.js.ejs"),
+        path.join(projectRoot, "src/utils/prisma.js"),
+        context,
+      );
+
+      command = "sb-crud-prisma";
+    }
+
     for (const entity of config.crudList) {
       const entityName = typeof entity === "string" ? entity : entity.name;
       const entityFields = entity.fields || [];
       console.log(`⚙️  Running sb-crud-gen for: ${entityName}...`);
-      const result = spawnSync("npx", ["sb-crud-gen", "create", entityName, ...entityFields], {
-        cwd: projectRoot,
-        stdio: "inherit",
-        shell: true,
-      });
+      const result = spawnSync(
+        "npx",
+        [command, "create", entityName, ...entityFields],
+        {
+          cwd: projectRoot,
+          stdio: "inherit",
+          shell: true,
+        },
+      );
       if (result.error) {
         console.error(`❌ sb-crud-gen failed for ${entityName}:`, result.error);
         process.exit(1);

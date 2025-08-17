@@ -7,13 +7,13 @@ Easily generate components, hooks, tests, pages, and context files using intuiti
 
 ## 🚀 Features
 
-* 🔧 Generate React components with boilerplate
-* 🪝 Create custom hooks with sensible defaults
-* 🧪 Add test files for your components
-* 📄 Scaffold page files for routing
-* 🧠 Create React context providers and hooks
-* ✨ Supports multiple entries per type in a single command
-* 📁 Automatically places files in the correct `src/` subfolders
+- 🔧 Generate React components with boilerplate
+- 🪝 Create custom hooks with sensible defaults
+- 🧪 Add test files for your components
+- 📄 Scaffold page files for routing
+- 🧠 Create React context providers and hooks
+- ✨ Supports multiple entries per type in a single command
+- 📁 Automatically places files in the correct `src/` subfolders
 
 ---
 
@@ -84,24 +84,23 @@ src/context/CartContext.jsx
 
 ## 📚 Boilerplate Overview
 
-* **Component:** Functional React component
-* **Hook:** Custom `useX` hook
-* **Test:** React Testing Library setup
-* **Page:** Basic functional component
-* **Context:** Provider + custom hook for usage
+- **Component:** Functional React component
+- **Hook:** Custom `useX` hook
+- **Test:** React Testing Library setup
+- **Page:** Basic functional component
+- **Context:** Provider + custom hook for usage
 
 ---
 
 ## 📌 Notes
 
-* Component and context names are automatically capitalized.
-* Hook names are prefixed with `use` if not already.
-* All files use `.jsx` extension.
-* Works best inside a standard React app using the described folder structure.
+- Component and context names are automatically capitalized.
+- Hook names are prefixed with `use` if not already.
+- All files use `.jsx` extension.
+- Works best inside a standard React app using the described folder structure.
 
 ---
 
 ## 🧩 License
 
 MIT — Feel free to use, modify, and contribute.
-

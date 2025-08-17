@@ -22,7 +22,7 @@
   "dependencies": {
     "ejs": "^3.1.10",
     "fs-extra": "^11.2.0",
-    "sb-crud-gen": "^1.0.9",
+    "sb-crud-gen": "^2.0.1",
     "yargs": "^18.0.0"
   },
   "keywords": [

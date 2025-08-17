@@ -1,16 +1,14 @@
-
 ## API Server (PostgreSQL + Express + Composable DB Abstraction)
-
 
 ---
 
 ### 🚀 Features: Create simple api server
 
-* Express + Dockerized PostgreSQL setup
-* `.env` based configuration
-* Modular composable `db.user.getAll()` style access
-* Simple `queries/` folder for clean SQL
-* Auto-generated CRUD structure with custom script (`sb-gen-api`)
+- Express + Dockerized PostgreSQL setup
+- `.env` based configuration
+- Modular composable `db.user.getAll()` style access
+- Simple `queries/` folder for clean SQL
+- Auto-generated CRUD structure with custom script (`sb-gen-api`)
 
 ## Usage
 
@@ -68,16 +66,17 @@ docker compose up --build
 
 This will:
 
-* Start the Express app on port `4000`
-* Spin up a PostgreSQL 15 container with DB `userapp`
-
+- Start the Express app on port `4000`
+- Spin up a PostgreSQL 15 container with DB `userapp`
 
 #### 3. Check API
+
 Try visitng:
 http://localhost:4000/api/health
 You should get:
+
 ```json
-{"status":"ok","message":"API is healthy 🚀"}
+{ "status": "ok", "message": "API is healthy 🚀" }
 ```
 
 ### 🛠️ Generate CRUD for a Model
@@ -96,39 +95,43 @@ Use `sb-gen-server --init-config`:
 sb-gen-server --init-config # copy default config.json to current dir, you can change it as you need
 ```
 
+### Change to CRUD Prisma/Raw:
+You can change generated queires between raw sql/prisma in config.json:
+```json
+"query": "prsima"
+```
+Will use prisma client.
 
-* Creates route, controller, and query files for a given model name.
-* Uses pg client (`pool.js`) for database operations.
-* Automatically updates (or creates):
+- Creates route, controller, and query files for a given model name.
+- Uses pg client (`pool.js`) for database operations.
+- Automatically updates (or creates):
+  - `src/routes/index.js` to import/register the route
+  - `src/db/db.js` to register the model
 
-  * `src/routes/index.js` to import/register the route
-  * `src/db/db.js` to register the model
-* Prevents overwriting existing files.
-* Cleanly removes all generated files and related registrations.
-* Uses ESM style imports throughout.
+- Prevents overwriting existing files.
+- Cleanly removes all generated files and related registrations.
+- Uses ESM style imports throughout.
 
 ---
-
 
 ### 📦 DB Abstraction
 
 In `src/db/db.js`, all queries are composed like this:
 
 ```js
-import user from './queries/user.js';
+import user from "./queries/user.js";
 
 const db = {
-  user
+  user,
 };
 
 export default db;
-
 ```
 
 Usage in controller:
 
 ```js
-import db from '../db/db.js';
+import db from "../db/db.js";
 
 export const getAllUsers = async (req, res) => {
   const users = await db.user.getAll();
@@ -152,7 +155,7 @@ export const getAllUsers = async (req, res) => {
 
 ### 📚 Future Plans
 
-* Add pagination & filtering
-* Add unit tests
-* Extend script to support relations
-* Add automatic OpenAPI generation
+- Add pagination & filtering
+- Add unit tests
+- Extend script to support relations
+- Add automatic OpenAPI generation
